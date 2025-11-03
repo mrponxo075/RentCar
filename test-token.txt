@@ -1,0 +1,29 @@
+https://www.jwt.io/
+
+algorithm and token type:
+
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+
+data:
+
+{
+  "sub": "1",
+  "name": "usuario@test.com",
+  "role": "Admin",
+  "iss": "TestCreation",
+  "aud": "RentCarApi",
+  "exp": 1759481158
+}
+
+
+secret:
+
+Key for use in testing. Do not use this mechanism in production.
+
+----------------------------------------------------------------
+
+generate exp (epoch time): https://www.epochconverter.com/

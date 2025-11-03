@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentCar.WebApi", "RentCar.WebApi\RentCar.WebApi.csproj", "{5036407E-9D16-40B0-88FD-3E802C367B59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		test-token.txt = test-token.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentCar.Application", "RentCar.Application\RentCar.Application.csproj", "{C96CF37F-0A93-421C-BE5D-775B856DBB2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5036407E-9D16-40B0-88FD-3E802C367B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5036407E-9D16-40B0-88FD-3E802C367B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5036407E-9D16-40B0-88FD-3E802C367B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5036407E-9D16-40B0-88FD-3E802C367B59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96CF37F-0A93-421C-BE5D-775B856DBB2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96CF37F-0A93-421C-BE5D-775B856DBB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96CF37F-0A93-421C-BE5D-775B856DBB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C96CF37F-0A93-421C-BE5D-775B856DBB2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4BF0EB07-BEAB-41D6-B5B6-E3D76C9C53F8}
+	EndGlobalSection
+EndGlobal

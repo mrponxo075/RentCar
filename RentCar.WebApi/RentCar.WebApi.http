@@ -1,0 +1,6 @@
+@RentCar.WebApi_HostAddress = http://localhost:5012
+
+GET {{RentCar.WebApi_HostAddress}}/api/HealthCheck/live
+Accept: application/json
+
+###

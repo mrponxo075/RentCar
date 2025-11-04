@@ -1,21 +1,21 @@
-//using RentCar.WebApi.Extensions;
-using RentCar.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-//using Serilog;
-using System.Text;
 using RentCar.Application.Dtos.Configuration;
+using RentCar.WebApi.Extensions;
+using RentCar.WebApi.Middlewares;
+using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Log.Logger = new LoggerConfiguration()
-//    .ReadFrom.Configuration(builder.Configuration)
-//    .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
-//builder.Host.UseSerilog();
+builder.Host.UseSerilog();
 
-//builder.Services.AddApplication(builder.Configuration);
-//builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

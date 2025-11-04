@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RentCar.Application.Contracts.Repositories;
 
 namespace RentCar.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HealthCheckController() : ControllerBase
+    public class HealthCheckController(IHealthRepository repository) : ControllerBase
     {
+        private readonly IHealthRepository _repository = repository;
+
         [HttpGet("live")]
         public IActionResult Live()
         {
@@ -15,13 +18,13 @@ namespace RentCar.WebApi.Controllers
 
         [Authorize]
         [HttpGet("health")]
-        public IActionResult HealthCheckAsync()
+        public async Task<IActionResult> HealthCheckAsync()
         {
             return Ok(new
             {
                 status = "Secure",
                 user = User.Identity?.Name ?? "anonymous",
-                //db = await _repository.IsHealthy() ? "Healthy" : "Unhealthy",
+                db = await _repository.IsHealthyDataBaseConnection() ? "Healthy" : "Unhealthy",
                 time = DateTime.UtcNow
             });
         }

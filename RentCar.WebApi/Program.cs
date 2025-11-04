@@ -58,7 +58,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-//Log.Information(">>> Run app... <<<");
+Log.Information(">>> Run app... <<<");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -71,5 +71,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
+
+Log.Information(">>> App is running <<<");
 
 app.Run();

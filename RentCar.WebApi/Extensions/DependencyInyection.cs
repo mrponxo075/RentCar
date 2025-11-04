@@ -1,5 +1,9 @@
 ﻿using RentCar.Application.Contracts.Repositories;
+using RentCar.Application.Mappings;
 using RentCar.Infrastructure.Repositories;
+using FluentValidation;
+using RentCar.Application.Validators;
+using RentCar.Application.Dtos;
 
 namespace RentCar.WebApi.Extensions
 {
@@ -9,6 +13,11 @@ namespace RentCar.WebApi.Extensions
             this IServiceCollection services,
             IConfiguration config)
         {
+            // automapper
+            services.AddAutoMapper(cfg => { }, typeof(AutoMapperProfile).Assembly);
+
+            // validators
+            services.AddScoped<IValidator<CustomerDto>, CustomerDtoValidator>();
 
             return services;
         }
@@ -22,5 +31,7 @@ namespace RentCar.WebApi.Extensions
 
             return services;
         }
+
+        
     }
 }

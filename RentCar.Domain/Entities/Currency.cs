@@ -9,19 +9,21 @@ namespace RentCar.Domain.Entities
         [Key]
         [StringLength(3)]
         [Column("CurrencyId", TypeName = "char(3)")]
-        public string CurrencyId { get; set; } = null!;
+        public string CurrencyId { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(50)]
         [Column("CurrencyName")]
-        public string CurrencyName { get; set; } = null!;
+        public string CurrencyName { get; set; } = string.Empty;
 
         [MaxLength(3)]
         [Column("Symbol")]
         public string? Symbol { get; set; }
 
-        public ICollection<Car> Cars { get; set; } = [];
+        [InverseProperty(nameof(Car.Currency))]
+        public ICollection<Car>? Cars { get; set; }
         
-        public ICollection<Rental> Rentals { get; set; } = [];
+        [InverseProperty(nameof(Rental.Currency))]
+        public ICollection<Rental>? Rentals { get; set; }
     }
 }

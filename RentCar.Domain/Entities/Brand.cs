@@ -13,10 +13,12 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(50)]
         [Column("BrandName")]
-        public string BrandName { get; set; } = null!;
+        public string BrandName { get; set; } = string.Empty;
 
-        public ICollection<Model> Models { get; set; } = [];
+        [InverseProperty(nameof(Model.Brand))]
+        public ICollection<Model>? Models { get; set; }
 
-        public ICollection<Car> Cars { get; set; } = [];
+        [InverseProperty(nameof(Model.Car))]
+        public ICollection<Car>? Cars { get; set; }
     }
 }

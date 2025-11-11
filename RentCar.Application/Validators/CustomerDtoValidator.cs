@@ -7,7 +7,7 @@ namespace RentCar.Application.Validators
     {
         public CustomerDtoValidator()
         {
-            RuleFor(c => c.Name)
+            RuleFor(c => c.FirstName)
                 .NotNull().WithMessage("Name cannot be null.")
                 .NotEmpty().WithMessage("Name cannot be empty.")
                 .MaximumLength(50).WithMessage("Name maximum lenght is 50.");

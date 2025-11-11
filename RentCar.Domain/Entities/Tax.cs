@@ -13,7 +13,7 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(100)]
         [Column("TaxName")]
-        public string TaxName { get; set; } = null!;
+        public string TaxName { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Column("TaxDescription")]
@@ -23,6 +23,7 @@ namespace RentCar.Domain.Entities
         [Column("Rate", TypeName = "decimal(5,2)")]
         public decimal Rate { get; set; }
 
-        public ICollection<Rental> Rentals { get; set; } = [];
+        [InverseProperty(nameof(Rental.Tax))]
+        public ICollection<Rental>? Rentals { get; set; }
     }
 }

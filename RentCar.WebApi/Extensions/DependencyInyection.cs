@@ -4,6 +4,7 @@ using RentCar.Infrastructure.Repositories;
 using FluentValidation;
 using RentCar.Application.Validators;
 using RentCar.Application.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace RentCar.WebApi.Extensions
 {
@@ -28,6 +29,9 @@ namespace RentCar.WebApi.Extensions
         {
             services.AddScoped<IHealthRepository, HealthRepository>(
                 sd => new HealthRepository(config.GetConnectionString("DefaultConnection")!));
+
+            services.AddDbContext<RentCarContext>(options =>
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
             return services;
         }

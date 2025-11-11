@@ -39,9 +39,6 @@ CREATE TABLE Car (
     CarId INT IDENTITY(1,1) CONSTRAINT PK_Car PRIMARY KEY,
     ModelId INT UNIQUE NOT NULL,
     BrandId INT NOT NULL,
-    ManufacterYear SMALLINT NOT NULL DEFAULT 1980
-        CONSTRAINT CK_Car_ManufacterYear_1980 CHECK (ManufacterYear >= 1980),
-    LicensePlate VARCHAR(20) NOT NULL,
     Color NVARCHAR(50) NOT NULL,
     PricePerDay DECIMAL(10,2) NOT NULL
         CONSTRAINT CK_Car_PricePerDay_Positive CHECK (PricePerDay >= 0),
@@ -94,6 +91,7 @@ CREATE TABLE Rental (
     CustomerId INT NOT NULL,
     TaxId INT NOT NULL,
     CurrencyId CHAR(3) NOT NULL,
+    LicensePlate VARCHAR(20) NOT NULL,
     StartDate DATETIME2(0) NOT NULL,
     EndDate DATETIME2(0) NOT NULL,
     RentalPrice DECIMAL(10,2) NOT NULL

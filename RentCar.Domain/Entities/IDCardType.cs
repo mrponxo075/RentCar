@@ -13,12 +13,13 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(50)]
         [Column("TypeName")]
-        public string TypeName { get; set; } = null!;
+        public string TypeName { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Column("IDCardTypeDescription")]
         public string? IDCardTypeDescription { get; set; }
 
-        public ICollection<Customer> Customers { get; set; } = [];
+        [InverseProperty(nameof(Customer.IDCardType))]
+        public ICollection<Customer>? Customers { get; set; }
     }
 }

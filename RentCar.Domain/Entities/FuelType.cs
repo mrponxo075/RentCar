@@ -13,7 +13,7 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(50)]
         [Column("FuelTypeName")]
-        public string FuelTypeName { get; set; } = null!;
+        public string FuelTypeName { get; set; } = string.Empty;
 
         [MaxLength(255)]
         [Column("FuelTypeDescription")]
@@ -23,6 +23,7 @@ namespace RentCar.Domain.Entities
         [Column("KilometersAutonomy")]
         public short KilometersAutonomy { get; set; }
 
-        public ICollection<Model> Models { get; set; } = [];
+        [InverseProperty(nameof(Model.FuelType))]
+        public ICollection<Model>? Models { get; set; }
     }
 }

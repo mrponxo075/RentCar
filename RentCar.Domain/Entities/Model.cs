@@ -13,7 +13,7 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(100)]
         [Column("ModelName")]
-        public string ModelName { get; set; } = null!;
+        public string ModelName { get; set; } = string.Empty;
 
         [Required]
         [Column("BrandId")]
@@ -24,11 +24,12 @@ namespace RentCar.Domain.Entities
         public int FuelTypeId { get; set; }
 
         [ForeignKey(nameof(BrandId))]
-        public Brand Brand { get; set; } = null!;
+        public Brand? Brand { get; set; }
 
         [ForeignKey(nameof(FuelTypeId))]
-        public FuelType FuelType { get; set; } = null!;
+        public FuelType? FuelType { get; set; }
 
+        [InverseProperty(nameof(Car.Model))]
         public Car? Car { get; set; }
     }
 }

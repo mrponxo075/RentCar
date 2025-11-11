@@ -25,7 +25,12 @@ namespace RentCar.Domain.Entities
         [Required]
         [StringLength(3)]
         [Column("CurrencyId", TypeName = "char(3)")]
-        public string CurrencyId { get; set; } = null!;
+        public string CurrencyId { get; set; } = string.Empty;
+
+        [Required]
+        [MaxLength(20)]
+        [Column("LicensePlate", TypeName = "varchar(20)")]
+        public string LicensePlate { get; set; } = string.Empty;
 
         [Required]
         [Column("StartDate", TypeName = "datetime2(0)")]
@@ -44,15 +49,15 @@ namespace RentCar.Domain.Entities
         public decimal? AssurancePrice { get; set; }
 
         [ForeignKey(nameof(CarId))]
-        public Car Car { get; set; } = null!;
+        public Car? Car { get; set; }
 
         [ForeignKey(nameof(CustomerId))]
-        public Customer Customer { get; set; } = null!;
+        public Customer? Customer { get; set; }
 
         [ForeignKey(nameof(TaxId))]
-        public Tax Tax { get; set; } = null!;
+        public Tax? Tax { get; set; }
 
         [ForeignKey(nameof(CurrencyId))]
-        public Currency Currency { get; set; } = null!;
+        public Currency? Currency { get; set; }
     }
 }

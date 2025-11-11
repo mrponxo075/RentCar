@@ -13,12 +13,12 @@ namespace RentCar.Domain.Entities
         [Required]
         [MaxLength(50)]
         [Column("FirstName")]
-        public string FirstName { get; set; } = null!;
+        public string FirstName { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(50)]
         [Column("LastName")]
-        public string LastName { get; set; } = null!;
+        public string LastName { get; set; } = string.Empty;
 
         [MaxLength(50)]
         [Column("SecondLastName")]
@@ -33,12 +33,12 @@ namespace RentCar.Domain.Entities
         [MaxLength(20)]
         [Phone]
         [Column("Phone", TypeName = "varchar(20)")]
-        public string Phone { get; set; } = null!;
+        public string Phone { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(255)]
         [Column("CustomerAddress")]
-        public string CustomerAddress { get; set; } = null!;
+        public string CustomerAddress { get; set; } = string.Empty;
 
         [MaxLength(50)]
         [Column("IDNumber")]
@@ -50,6 +50,7 @@ namespace RentCar.Domain.Entities
         [ForeignKey(nameof(IDCardTypeId))]
         public IDCardType? IDCardType { get; set; }
 
-        public ICollection<Rental> Rentals { get; set; } = [];
+        [InverseProperty(nameof(Rental.Customer))]
+        public ICollection<Rental>? Rentals { get; set; }
     }
 }

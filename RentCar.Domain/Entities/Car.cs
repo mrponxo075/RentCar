@@ -18,19 +18,10 @@ namespace RentCar.Domain.Entities
         [Column("BrandId")]
         public int BrandId { get; set; }
 
-        [Range(1980, short.MaxValue)]
-        [Column("ManufacterYear")]
-        public short ManufacterYear { get; set; } = 1980;
-
-        [Required]
-        [MaxLength(20)]
-        [Column("LicensePlate", TypeName = "varchar(20)")]
-        public string LicensePlate { get; set; } = null!;
-
         [Required]
         [MaxLength(50)]
         [Column("Color")]
-        public string Color { get; set; } = null!;
+        public string Color { get; set; } = string.Empty;
 
         [Range(0, double.MaxValue)]
         [Column("PricePerDay", TypeName = "decimal(10,2)")]
@@ -47,21 +38,22 @@ namespace RentCar.Domain.Entities
         [Required]
         [StringLength(3)]
         [Column("CurrencyId", TypeName = "char(3)")]
-        public string CurrencyId { get; set; } = null!;
+        public string CurrencyId { get; set; } = string.Empty;
 
         [Range(0, short.MaxValue)]
         [Column("Stock")]
         public short Stock { get; set; }
 
         [ForeignKey(nameof(ModelId))]
-        public Model Model { get; set; } = null!;
+        public Model? Model { get; set; }
 
         [ForeignKey(nameof(BrandId))]
-        public Brand Brand { get; set; } = null!;
+        public Brand? Brand { get; set; }
 
         [ForeignKey(nameof(CurrencyId))]
-        public Currency Currency { get; set; } = null!;
+        public Currency? Currency { get; set; }
 
-        public ICollection<Rental> Rentals { get; set; } = [];
+        [InverseProperty(nameof(Rental.Car))]
+        public ICollection<Rental>? Rentals { get; set; }
     }
 }

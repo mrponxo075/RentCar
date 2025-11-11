@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using RentCar.Application.Dtos;
+using RentCar.Domain.Entities;
 
 
 namespace RentCar.Application.Mappings
@@ -8,10 +10,10 @@ namespace RentCar.Application.Mappings
         public AutoMapperProfile()
         {
             // Ejemplo de mapeo entidad → DTO
-            //CreateMap<Cliente, ClienteDto>()
-            //    .ForMember(
-            //    dest => dest.NombreCompleto,
-            //    opt => opt.MapFrom(src => $"{src.Nombre} {src.Apellidos}"));
+            CreateMap<Customer, CustomerDto>()
+                .ForMember(
+                dest => dest.FullName,
+                opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
         }
     }
 }

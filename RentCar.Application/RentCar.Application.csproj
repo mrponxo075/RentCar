@@ -16,4 +16,8 @@
     <ProjectReference Include="..\RentCar.Domain\RentCar.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>

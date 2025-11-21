@@ -48,7 +48,7 @@ namespace RentCar.Infrastructure.Repositories
         {
             if (Tax.IsPermanentTax(taxId))
             {
-                return ResponseStatus.Unauthorized;
+                return ResponseStatus.NotAllowed;
             }
 
             Tax? tax = await _context.Taxes

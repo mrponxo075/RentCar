@@ -8,9 +8,5 @@ namespace RentCar.Application.Dtos.Responses
 {
     public class TaxResponseDto : Response<TaxDto>
     {
-        public TaxResponseDto(IEnumerable<TaxDto>? data, ResponseStatus status, string? message = null)
-            : base(data, status, message)
-        {
-        }
     }
 }

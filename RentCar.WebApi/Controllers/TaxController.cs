@@ -1,60 +1,77 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentCar.Application.Contracts.Repositories;
+using RentCar.Application.Contracts.Services;
+using RentCar.Application.Dtos.Requests;
+using RentCar.Application.Dtos.Responses;
+using System.Net;
 
 namespace RentCar.WebApi.Controllers
 {
     [ApiController]
     [Authorize]
     [Route("api/[controller]")]
-    public class TaxController : ControllerBase
+    public class TaxController(ITaxService taxService) : ControllerBase
     {
-        
+        private readonly ITaxService _taxService = taxService;
+
         [HttpGet("taxes")]
         [ActionName(nameof(GetTaxesAsync))]
         public async Task<IActionResult> GetTaxesAsync()
         {
-            // Placeholder implementation
-            var taxes = new[]
-            {
-                new { TaxId = 1, TaxName = "IVA Regular", Rate = 21.0m },
-                new { TaxId = 2, TaxName = "IVA Reduced", Rate = 10.0m }
-            };
-
-            await Task.CompletedTask; // Simulate async operation
-
-            return Ok(taxes);
+            var result = await _taxService.GetTaxesAsync();
+            
+            return Ok(result.Data);
         }
 
         [Authorize]
         [HttpGet("taxes/{taxId}")]
         public async Task<IActionResult> GetTaxByIdAsync(int taxId)
         {
-            // Placeholder implementation
-            var tax = new { TaxId = taxId, TaxName = "IVA Regular", Rate = 21.0m };
-            
-            await Task.CompletedTask; // Simulate async operation
-            
-            return Ok(tax);
+            var result = await _taxService.GetTaxByIdAsync(taxId);
+
+            if (result.Status == ResponseStatus.NotFound)
+            {
+                return NotFound(new { message = result.Message });
+            }
+
+            return Ok(result.Data!.First());
         }
 
         [Authorize]
         [HttpPost("taxes")]
-        public async Task<IActionResult> CreateTaxAsync([FromBody] object taxDto)
+        public async Task<IActionResult> CreateTaxAsync([FromBody] TaxRequestDto taxDto)
         {
-            // Placeholder implementation
-            await Task.CompletedTask; // Simulate async operation
-            
-            return CreatedAtAction(nameof(GetTaxByIdAsync), new { taxId = 3 }, taxDto);
+            var result = await _taxService.CreateTaxAsync(taxDto);
+
+            if (result.Status == ResponseStatus.ValidationError)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
+            var response = result.Data!.First();
+
+            return CreatedAtAction(
+                nameof(GetTaxByIdAsync),
+                new { taxId = response.TaxId },
+                response);
         }
 
         [Authorize]
         [HttpPut("taxes/{taxId}")]
-        public async Task<IActionResult> UpdateTaxAsync(int taxId, [FromBody] object taxDto)
+        public async Task<IActionResult> UpdateTaxAsync(int taxId, [FromBody] TaxRequestDto taxDto)
         {
-            // Placeholder implementation
-            await Task.CompletedTask; // Simulate async operation
-            
+            var result = await _taxService.UpdateTaxAsync(taxId, taxDto);
+
+            if (result.Status == ResponseStatus.NotFound)
+            {
+                return NotFound(new { message = result.Message });
+            }
+
+            if (result.Status == ResponseStatus.ValidationError)
+            {
+                return BadRequest(new { message = result.Message });
+            }
+
             return NoContent();
         }
 
@@ -62,9 +79,25 @@ namespace RentCar.WebApi.Controllers
         [HttpDelete("taxes/{taxId}")]
         public async Task<IActionResult> DeleteTaxAsync(int taxId)
         {
-            // Placeholder implementation
-            await Task.CompletedTask; // Simulate async operation
-            
+            var result = await _taxService.DeleteTaxAsync(taxId);
+
+            if (result.Status == ResponseStatus.NotFound)
+            {
+                return NotFound(new { message = result.Message });
+            }
+
+            if (result.Status == ResponseStatus.NotAllowed)
+            {
+                return StatusCode(
+                    (int)HttpStatusCode.MethodNotAllowed,
+                    new { message = result.Message });
+            }
+
+            if (result.Status == ResponseStatus.Conflict)
+            {
+                return Conflict(new { message = result.Message });
+            }
+
             return NoContent();
         }
     }

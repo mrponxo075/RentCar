@@ -6,19 +6,19 @@
         Conflict,
         NotFound,
         ValidationError,
-        Unauthorized
+        NotAllowed
     }
 
     public abstract class Response<T> where T : class
     {
-        public Response(IEnumerable<T>? data, ResponseStatus status, string? message = null)
-        {
-            Data = data;
-            Status = status;
-            Message = message;
-        }
+        //public Response(IEnumerable<T>? data, ResponseStatus status, string? message = null)
+        //{
+        //    Data = data;
+        //    Status = status;
+        //    Message = message;
+        //}
 
-        public IEnumerable<T>? Data { get; set; }
+        public IEnumerable<T>? Data { get; set; } = null;
         
         public ResponseStatus Status { get; set; }
 

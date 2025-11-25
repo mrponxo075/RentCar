@@ -28,7 +28,7 @@ namespace RentCart.Application.Test.Services
 
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile<AutoMapperProfile>();
+                cfg.AddMaps(typeof(AutoMapperProfile).Assembly);
             },
             null);
 

@@ -41,8 +41,8 @@ namespace RentCar.Domain.Entities
 
         public static bool IsPermanentTax(int taxId)
         {
-            return TaxType.IVA_REGULAR.Equals(taxId)
-                || TaxType.IVA_REDUCED.Equals(taxId);
+            return (int)TaxType.IVA_REGULAR == taxId
+                || (int)TaxType.IVA_REDUCED == taxId;
         }
     }
 }

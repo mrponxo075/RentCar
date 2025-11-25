@@ -11,13 +11,6 @@
 
     public abstract class Response<T> where T : class
     {
-        //public Response(IEnumerable<T>? data, ResponseStatus status, string? message = null)
-        //{
-        //    Data = data;
-        //    Status = status;
-        //    Message = message;
-        //}
-
         public IEnumerable<T>? Data { get; set; } = null;
         
         public ResponseStatus Status { get; set; }

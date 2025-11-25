@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.Extensions.Logging;
 using RentCar.Application.Contracts.Repositories;
 using RentCar.Application.Contracts.Services;
 using RentCar.Application.Dtos.Requests;
@@ -11,9 +12,11 @@ namespace RentCar.Application.Services
     public class TaxService(
         ITaxRepository taxRepository,
         IValidator<TaxRequestDto> validator,
-        IMapper mapper) : BaseService<TaxRequestDto>(validator, mapper), ITaxService
+        IMapper mapper,
+        ILogger<TaxService> logger) : BaseService<TaxRequestDto>(validator, mapper), ITaxService
     {
         private readonly ITaxRepository _taxRepository = taxRepository;
+        private readonly ILogger<TaxService> _logger = logger;
 
         public async Task<TaxResponseDto> GetTaxByIdAsync(int taxId)
         {
@@ -21,6 +24,8 @@ namespace RentCar.Application.Services
 
             if (tax == null)
             {
+                _logger.LogWarning("Tax with ID {TaxId} not found.", taxId);
+
                 return new()
                 {
                     Status = ResponseStatus.NotFound,
@@ -28,7 +33,7 @@ namespace RentCar.Application.Services
                 };
             }
 
-            return new() { Data = [_mapper.Map<TaxDto>(tax)], Status = ResponseStatus.NotFound };
+            return new() { Data = [_mapper.Map<TaxDto>(tax)], Status = ResponseStatus.Success };
         }
 
         public async Task<TaxResponseDto> GetTaxesAsync()
@@ -48,6 +53,8 @@ namespace RentCar.Application.Services
 
             if (result.Status == ResponseStatus.ValidationError)
             {
+                _logger.LogWarning("Validation failed for creating tax: {Message}", result.Message);
+
                 return result;
             }
 
@@ -67,13 +74,29 @@ namespace RentCar.Application.Services
 
             if (result.Status == ResponseStatus.ValidationError)
             {
+                _logger.LogWarning(
+                    "Validation failed for updating tax with ID {TaxId}: {Message}",
+                    taxId,
+                    result.Message);
+
                 return result;
             }
 
             Tax tax = _mapper.Map<Tax>(taxDto);
-            await _taxRepository.UpdateTaxAsync(taxId, tax);
+            var status = await _taxRepository.UpdateTaxAsync(taxId, tax);
 
-            return new() { Status = ResponseStatus.Success };
+            if (status == ResponseStatus.NotFound)
+            {
+                _logger.LogWarning("Tax with ID {TaxId} not found for update.", taxId);
+
+                return new()
+                {
+                    Status = ResponseStatus.NotFound,
+                    Message = $"Tax with ID {taxId} not found."
+                };
+            }
+
+            return new() { Status = status };
         }
 
         public async Task<TaxResponseDto> DeleteTaxAsync(int taxId)
@@ -93,6 +116,11 @@ namespace RentCar.Application.Services
             else if (status == ResponseStatus.Conflict)
             {
                 message = $"Tax with ID {taxId} is associated with existing rentals and cannot be deleted.";
+            }
+
+            if (message != null)
+            {
+                _logger.LogWarning("Failed to delete tax with ID {TaxId}: {Message}", taxId, message);
             }
 
             return new() { Status = status, Message = message };

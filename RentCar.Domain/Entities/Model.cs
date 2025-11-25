@@ -30,6 +30,6 @@ namespace RentCar.Domain.Entities
         public FuelType? FuelType { get; set; }
 
         [InverseProperty(nameof(Car.Model))]
-        public Car? Car { get; set; }
+        public ICollection<Car>? Cars { get; set; }
     }
 }

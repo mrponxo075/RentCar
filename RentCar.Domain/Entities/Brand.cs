@@ -18,7 +18,7 @@ namespace RentCar.Domain.Entities
         [InverseProperty(nameof(Model.Brand))]
         public ICollection<Model>? Models { get; set; }
 
-        [InverseProperty(nameof(Model.Car))]
+        [InverseProperty(nameof(Car.Brand))]
         public ICollection<Car>? Cars { get; set; }
     }
 }

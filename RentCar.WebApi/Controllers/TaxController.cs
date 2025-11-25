@@ -15,7 +15,6 @@ namespace RentCar.WebApi.Controllers
         private readonly ITaxService _taxService = taxService;
 
         [HttpGet("taxes")]
-        [ActionName(nameof(GetTaxesAsync))]
         public async Task<IActionResult> GetTaxesAsync()
         {
             var result = await _taxService.GetTaxesAsync();
@@ -25,6 +24,7 @@ namespace RentCar.WebApi.Controllers
 
         [Authorize]
         [HttpGet("taxes/{taxId}")]
+        [ActionName(nameof(GetTaxByIdAsync))]
         public async Task<IActionResult> GetTaxByIdAsync(int taxId)
         {
             var result = await _taxService.GetTaxByIdAsync(taxId);

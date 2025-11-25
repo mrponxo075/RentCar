@@ -7,6 +7,7 @@ using RentCar.Application.Dtos;
 using Microsoft.EntityFrameworkCore;
 using RentCar.Application.Services;
 using RentCar.Application.Contracts.Services;
+using RentCar.Application.Dtos.Requests;
 
 namespace RentCar.WebApi.Extensions
 {
@@ -21,6 +22,7 @@ namespace RentCar.WebApi.Extensions
 
             // validators
             services.AddScoped<IValidator<CustomerDto>, CustomerDtoValidator>();
+            services.AddScoped<IValidator<TaxRequestDto>, TaxDtoValidator>();
 
             // services
             services.AddScoped<ITaxService, TaxService>();

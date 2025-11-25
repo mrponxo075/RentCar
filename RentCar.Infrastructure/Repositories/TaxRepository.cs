@@ -37,6 +37,7 @@ namespace RentCar.Infrastructure.Repositories
                 return ResponseStatus.NotFound;
             }
 
+            tax.TaxId = taxId;
             _context.Entry(existingTax).CurrentValues.SetValues(tax);
 
             await _context.SaveChangesAsync();

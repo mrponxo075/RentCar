@@ -11,7 +11,7 @@ namespace RentCar.Application.Mappings
     {
         public AutoMapperProfile()
         {
-            // Ejemplo de mapeo entidad → DTO
+            // Customers
             CreateMap<Customer, CustomerDto>()
                 .ForMember(
                 dest => dest.FullName,
